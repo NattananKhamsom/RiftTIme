@@ -1,21 +1,25 @@
-// --- ส่วนที่ 1: การทำงานของ SERVER CARDS ---
+// --- ส่วนที่ 1: การทำงานของ SERVER CARDS (ปรับปรุงใหม่) ---
 
 const allServerCards = document.querySelectorAll('.server-card');
 allServerCards.forEach(card => {
+    // --- ดึง Elements ภายใน "การ์ดนี้" ---
     const startBtn = card.querySelector('.start-btn');
     const resetBtn = card.querySelector('.reset-btn');
     const statusLight = card.querySelector('.status-light-box');
     const countdownTimer = card.querySelector('.countdown-timer');
     const progressBar = card.querySelector('.progress-bar');
 
+    // --- ตั้งค่าเวลา ---
     const TOTAL_CYCLE_TIME = 90 * 60 * 1000;
     const GREEN_LIGHT_DURATION = 8 * 60 * 1000;
 
-    let mainCycleInterval;
+    // --- ตัวแปรสำหรับควบคุมการทำงาน ---
+    let mainCycleTimeout; // เปลี่ยนจาก Interval เป็น Timeout
     let countdownInterval;
     let nextGreenTime;
     let isRunning = false;
 
+    // --- ฟังก์ชัน Helper ---
     function formatTime(ms) {
         if (ms <= 0) return "00:00:00";
         const totalSeconds = Math.floor(ms / 1000);
@@ -25,17 +29,23 @@ allServerCards.forEach(card => {
         return `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
     }
     
-    // ตั้งค่าเวลาเริ่มต้นให้ถูกต้อง
+    // ตั้งค่าเวลาเริ่มต้นในหน้าจอ
     countdownTimer.textContent = formatTime(TOTAL_CYCLE_TIME);
 
-    function runStatusCycle() {
+    // ฟังก์ชันนี้จะทำงานเมื่อครบกำหนด 90 นาที เพื่อเปิดไฟเขียว
+    function triggerGreenLightCycle() {
         statusLight.classList.add('green');
         statusLight.classList.remove('red');
+
+        // ตั้งเวลา 8 นาทีเพื่อปิดไฟเขียว แล้วกลับไปเป็นแดง
         setTimeout(() => {
             statusLight.classList.remove('green');
             statusLight.classList.add('red');
         }, GREEN_LIGHT_DURATION);
+
+        // ตั้งเวลานับถอยหลังรอบถัดไป
         nextGreenTime = Date.now() + TOTAL_CYCLE_TIME;
+        mainCycleTimeout = setTimeout(triggerGreenLightCycle, TOTAL_CYCLE_TIME);
     }
 
     function updateCountdown() {
@@ -46,19 +56,28 @@ allServerCards.forEach(card => {
         progressBar.style.width = `${progressPercent}%`;
     }
 
+    // ## จุดที่เปลี่ยนแปลงหลัก ##
     function startTimer() {
         if (isRunning) return;
         isRunning = true;
         startBtn.disabled = true;
-        runStatusCycle();
-        mainCycleInterval = setInterval(runStatusCycle, TOTAL_CYCLE_TIME);
+
+        // 1. เปลี่ยนเป็น "สีแดง" ทันทีเมื่อกด Start
+        statusLight.classList.add('red');
+        statusLight.classList.remove('green');
+        
+        // 2. เริ่มนับถอยหลัง และตั้งเวลาให้ไฟเขียวทำงานในอีก 90 นาทีข้างหน้า
+        nextGreenTime = Date.now() + TOTAL_CYCLE_TIME;
+        mainCycleTimeout = setTimeout(triggerGreenLightCycle, TOTAL_CYCLE_TIME);
+        
+        // 3. เริ่มอัปเดตหน้าจอตัวนับเวลา
         countdownInterval = setInterval(updateCountdown, 1000);
     }
 
     function resetTimer() {
         isRunning = false;
         startBtn.disabled = false;
-        clearInterval(mainCycleInterval);
+        clearTimeout(mainCycleTimeout); // ใช้ clearTimeout
         clearInterval(countdownInterval);
         statusLight.classList.remove('green', 'red');
         countdownTimer.textContent = formatTime(TOTAL_CYCLE_TIME);
@@ -70,7 +89,6 @@ allServerCards.forEach(card => {
     resetBtn.addEventListener('click', resetTimer);
 });
 
-// --- ## ส่วนที่ 2: การทำงานของ TIMER CARDS (เพิ่มใหม่) ## ---
 
 const allTimerCards = document.querySelectorAll('.timer-card');
 allTimerCards.forEach(card => {
@@ -78,7 +96,6 @@ allTimerCards.forEach(card => {
     const resetBtn = card.querySelector('.reset-btn');
     const timerDisplay = card.querySelector('.timer-display');
     
-    // ตรวจสอบจาก h2 เพื่อกำหนดเวลาเริ่มต้นของการ์ดแต่ละใบ
     const title = card.querySelector('h2').textContent;
     let initialTime;
     if (title.includes('2 Hours')) {
