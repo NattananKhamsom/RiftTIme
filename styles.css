@@ -20,36 +20,76 @@ body {
     justify-content: center;
 }
 
+/* --- Server Card (ของเดิม) --- */
 .server-card {
     display: flex;
-    flex-direction: column; /* จัดเรียงเนื้อหาและปุ่มในแนวตั้ง */
+    flex-direction: column;
     background-color: #ffffff;
     padding: 20px;
     border-radius: 12px;
-    box-shadow: 0 4px S15px rgba(0, 0, 0, 0.08);
-    flex-basis: 420px; /* กำหนดความกว้างคงที่ */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+    flex-basis: 420px;
     box-sizing: border-box;
 }
 
 .card-content {
     display: flex;
     gap: 20px;
-    margin-bottom: 20px; /* ระยะห่างระหว่างเนื้อหากับปุ่ม */
+    margin-bottom: 20px;
 }
 
 .text-section { flex: 3; }
 .status-section { flex: 2; }
 
-/* --- ## สไตล์สำหรับปุ่มควบคุมในการ์ด (ปรับปรุงใหม่) ## --- */
+/* --- ## สไตล์สำหรับ Timer Card (เพิ่มใหม่) ## --- */
+.timer-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    background-color: #343a40; /* สีพื้นหลังเข้ม */
+    color: #ffffff; /* ตัวอักษรสีขาว */
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    flex-basis: 300px; /* ขนาดกะทัดรัดขึ้น */
+    box-sizing: border-box;
+}
+
+.timer-card h2 {
+    margin: 0;
+    font-size: 18px;
+    font-weight: normal;
+    border-bottom: 1px solid #495057;
+    padding-bottom: 10px;
+    width: 100%;
+    text-align: center;
+}
+
+.timer-display {
+    font-size: 42px; /* ตัวเลขใหญ่ขึ้น */
+    font-weight: bold;
+    font-family: monospace;
+}
+/* ------------------------------------------- */
+
 .card-controls {
     display: flex;
     gap: 10px;
+    width: 100%; /* ทำให้ปุ่มเต็มความกว้าง */
     border-top: 1px solid #eee;
     padding-top: 15px;
 }
 
+/* แยกสไตล์ปุ่มสำหรับ .timer-card เพื่อไม่ให้มีเส้นขอบ */
+.timer-card .card-controls {
+    border-top: none;
+    padding-top: 0;
+}
+
 .card-controls button {
-    flex-grow: 1; /* ทำให้ปุ่มขยายเต็มความกว้าง */
+    flex-grow: 1;
     padding: 10px;
     font-size: 15px;
     font-weight: bold;
