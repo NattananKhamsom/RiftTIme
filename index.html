@@ -3,16 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Server Status Dashboard</title>
+    <title>Dashboard Panel</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link rel="stylesheet" href="styles.css">
 </head>
-<body>
+<body class="light-theme">
 
-    <h1 class="main-title">Server Control</h1>
+    <div class="theme-switcher-container">
+        <button id="themeToggle">🌙 สลับโหมด</button>
+    </div>
+
+    <h1 class="main-title">Control Panel</h1>
 
     <div class="main-container">
 
-        <div class="server-card">
+        <!-- Server 1 Card -->
+        <div class="server-card" data-id="server-1">
             <div class="card-content">
                 <div class="text-section">
                     <h1>Server 1</h1>
@@ -20,7 +26,7 @@
                 </div>
                 <div class="status-section">
                     <div class="status-light-box"></div>
-                    <div class="countdown-timer">00:00:00</div>
+                    <div class="countdown-timer">01:30:00</div>
                     <div class="progress-bar-container">
                         <div class="progress-bar"></div>
                     </div>
@@ -32,7 +38,8 @@
             </div>
         </div>
 
-        <div class="server-card">
+        <!-- Server 2 Card -->
+        <div class="server-card" data-id="server-2">
             <div class="card-content">
                 <div class="text-section">
                     <h1>Server 2</h1>
@@ -40,7 +47,7 @@
                 </div>
                 <div class="status-section">
                     <div class="status-light-box"></div>
-                    <div class="countdown-timer">00:00:00</div>
+                    <div class="countdown-timer">01:30:00</div>
                     <div class="progress-bar-container">
                         <div class="progress-bar"></div>
                     </div>
@@ -52,15 +59,16 @@
             </div>
         </div>
 
-         <div class="server-card">
+          <!-- Server 3 Card -->
+        <div class="server-card" data-id="server-3">
             <div class="card-content">
                 <div class="text-section">
-                    <h1>Server 3</h1>
+                    <h1>Server 2</h1>
                     <textarea class="text-box" placeholder="รายละเอียด..."></textarea>
                 </div>
                 <div class="status-section">
                     <div class="status-light-box"></div>
-                    <div class="countdown-timer">00:00:00</div>
+                    <div class="countdown-timer">01:30:00</div>
                     <div class="progress-bar-container">
                         <div class="progress-bar"></div>
                     </div>
@@ -72,15 +80,16 @@
             </div>
         </div>
 
-         <div class="server-card">
+          <!-- Server 4 Card -->
+        <div class="server-card" data-id="server-4">
             <div class="card-content">
                 <div class="text-section">
-                    <h1>Server 4</h1>
+                    <h1>Server 2</h1>
                     <textarea class="text-box" placeholder="รายละเอียด..."></textarea>
                 </div>
                 <div class="status-section">
                     <div class="status-light-box"></div>
-                    <div class="countdown-timer">00:00:00</div>
+                    <div class="countdown-timer">01:30:00</div>
                     <div class="progress-bar-container">
                         <div class="progress-bar"></div>
                     </div>
@@ -91,8 +100,9 @@
                 <button class="reset-btn">■ Reset</button>
             </div>
         </div>
-
-        <div class="timer-card">
+        
+        <!-- Timer Card 1 (2 ชั่วโมง) --> 
+        <div class="timer-card" data-id="timer-1">
             <h2>Yakuza Raid (2 Hours)</h2>
             <div class="timer-display">02:00:00</div>
             <div class="card-controls">
@@ -101,7 +111,8 @@
             </div>
         </div>
 
-        <div class="timer-card">
+        <!-- Timer Card 2 (2 ชั่วโมง) -->
+        <div class="timer-card" data-id="timer-2">
             <h2>Bank Raid (2 Hours)</h2>
             <div class="timer-display">02:00:00</div>
             <div class="card-controls">
@@ -110,7 +121,8 @@
             </div>
         </div>
         
-        <div class="timer-card">
+        <!-- Timer Card 3 (30 นาที) -->
+        <div class="timer-card" data-id="timer-3">
             <h2>Rift Time (30 Minutes)</h2>
             <div class="timer-display">00:30:00</div>
             <div class="card-controls">
@@ -118,8 +130,8 @@
                 <button class="reset-btn">■ Reset</button>
             </div>
         </div>
-        
-        </div>
+
+    </div>
 
     <script src="script.js"></script>
 
